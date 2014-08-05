@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+group = 'com.github.buzztaiki'
+version = '1.0'
+
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'org.javassist:javassist:3.18.2-GA'
+}
+
+jar {
+  manifest {
+    manifest.attributes(
+      'Agent-Class': 'com.github.buzztaiki.jdk8039776.PatchAgent',
+      'Premain-Class': 'com.github.buzztaiki.jdk8039776.PatchAgent',
+      'Can-Redefine-Classes': 'true',
+      'Can-Retransform-Classes': 'true',
+    )
+  }
+  from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+tasks.withType(JavaCompile).all {
+  options.compilerArgs << "-Xlint:all"
+}
