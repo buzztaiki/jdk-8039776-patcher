@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
   compile 'org.javassist:javassist:3.18.2-GA'
+  testCompile 'junit:junit:4.11'
 }
 
 jar {
@@ -29,4 +30,9 @@ jar {
 
 tasks.withType(JavaCompile).all {
   options.compilerArgs << "-Xlint:all"
+}
+
+test {
+  dependsOn << jar
+  jvmArgs "-javaagent:${jar.archivePath}"
 }
