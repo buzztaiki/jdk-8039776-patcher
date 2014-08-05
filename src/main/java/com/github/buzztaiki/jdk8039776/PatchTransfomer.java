@@ -24,7 +24,8 @@ public class PatchTransfomer implements ClassFileTransformer {
             try {
                 return transformIntrospector(classfileBuffer);
             } catch (IOException | NotFoundException | CannotCompileException | RuntimeException e) {
-                System.err.println("jdk8039776.PatchTransfomer ERROR:" + e.toString());
+                System.err.println(Name.get() + " ERROR:");
+                e.printStackTrace(System.err);
                 return null;
             }
         }
